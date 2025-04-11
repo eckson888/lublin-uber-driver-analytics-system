@@ -30,4 +30,4 @@ with mlflow.start_run():
     mlflow.log_metric("mse", mse)
     mlflow.sklearn.log_model(model, "model", input_example=input_example)
 
-print(f"Mean Squared Error: {mse}")
+print(f"error: {mse}")
