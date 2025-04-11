@@ -11,7 +11,7 @@ from sklearn import datasets
 data = datasets.load_iris()
 
 df = pd.DataFrame(data=data.data, columns=data.feature_names)
-df['target'] = data.target  # 
+df['target'] = data.target
 
 X = df.drop("target", axis=1)
 y = df["target"] 
