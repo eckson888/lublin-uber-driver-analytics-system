@@ -1,33 +1,26 @@
-import mlflow
-import mlflow.sklearn
 import pandas as pd
-mlflow.set_experiment("first_experiment")
+from pathlib import Path
+import extraction as ex
+import cleaning as cl
+import transforming as tr
+import db_load as ld
+import cancelled_extract as ce
 
-    
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
-from sklearn import datasets
-data = datasets.load_iris()
+project_root = Path(__file__).resolve().parent.parent
+raw_data_dir = project_root / "data" / "raw"
+csv_files = list(raw_data_dir.glob("*.csv"))
 
-df = pd.DataFrame(data=data.data, columns=data.feature_names)
-df['target'] = data.target
+all_datasets = ex.extract(csv_files)
+merged_df = tr.transform(all_datasets)
+cancelled_trips_df = ce.extract_cancelled_trips(merged_df)
+cleaned_df = cl.clean_data(merged_df)
 
-X = df.drop("target", axis=1)
-y = df["target"] 
+merged_df.to_csv(f"{project_root}/data/merged/combined_dataset.csv", index=False)
+cleaned_df.to_csv(f"{project_root}/data/merged/combined_cleaned_dataset.csv", index=False)
+cancelled_trips_df.to_csv(f"{project_root}/data/merged/combined_cancelled_trips_dataset.csv", index=False)
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+#ld.load(merged_df)
 
-model = LinearRegression()
-model.fit(X_train, y_train)
-predictions = model.predict(X_test)
-mse = mean_squared_error(y_test, predictions)
+cleaned_df.info()
 
-input_example = X_test.iloc[0].to_dict()
-
-with mlflow.start_run():
-    mlflow.log_param("model_type", "LinearRegression")
-    mlflow.log_metric("mse", mse)
-    mlflow.sklearn.log_model(model, "model", input_example=input_example)
-
-print(f"error: {mse}")
+print(cleaned_df['license_plate'].value_counts())
