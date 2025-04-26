@@ -1,7 +1,14 @@
 import pandas as pd
-import cleaning as cl
+
 def transform(datasets):
     all_columns = set().union(*(df.columns for df in datasets))
-    datasets = [df.reindex(columns=all_columns) for df in datasets]
-    dataset_combined = pd.concat(datasets, ignore_index=True)
+
+    datasets_with_id = []
+    for idx, df in enumerate(datasets):
+        df_copy = df.copy()
+        df_copy['driver_id'] = idx
+        df_copy = df_copy.reindex(columns=all_columns.union(['driver_id']))
+        datasets_with_id.append(df_copy)
+
+    dataset_combined = pd.concat(datasets_with_id, ignore_index=True)
     return dataset_combined

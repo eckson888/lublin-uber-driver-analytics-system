@@ -22,5 +22,3 @@ cancelled_trips_df.to_csv(f"{project_root}/data/merged/combined_cancelled_trips_
 #ld.load(merged_df)
 
 cleaned_df.info()
-
-print(cleaned_df['license_plate'].value_counts())
