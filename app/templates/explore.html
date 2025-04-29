@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Explore</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
+    <meta charset="utf-8" />
+</head>
+<body class="font-mono">
+    
+    <div class="flex flex-col gap-6 p-6 justify-center">
+        
+        <div class="w-10/12 self-center">
+            {{ plot_categories | safe }}
+        </div>
+        
+        <div class="w-10/12 self-center" >
+            {{ plot_calendar | safe }}
+        </div>
+
+        <div class="w-10/12 self-center">
+            {{ plot_median | safe }}
+        </div>
+
+        <div class="w-10/12 self-center">
+            {{ plot_average | safe }}
+        </div>
+        
+        <div class="w-10/12 self-center">
+            {{ plot_pickups_gradient | safe }}
+        </div>
+
+        <div class="w-10/12 self-center">
+            {{ plot_dropoffs_scatter | safe }}
+        </div>
+
+    </div>
+
+
+</body>
+</html>

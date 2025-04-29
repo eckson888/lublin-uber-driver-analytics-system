@@ -562,17 +562,49 @@ video {
   margin-top: 0.75rem;
 }
 
+.mt-96 {
+  margin-top: 24rem;
+}
+
 .flex {
   display: flex;
 }
 
-.size-6 {
-  width: 1.5rem;
-  height: 1.5rem;
+.w-48 {
+  width: 12rem;
+}
+
+.w-10\/12 {
+  width: 83.333333%;
 }
 
 .flex-col {
   flex-direction: column;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.gap-6 {
+  gap: 1.5rem;
+}
+
+.self-center {
+  align-self: center;
+}
+
+.bg-blue-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(37 99 235 / var(--tw-bg-opacity, 1));
+}
+
+.p-2 {
+  padding: 0.5rem;
+}
+
+.p-6 {
+  padding: 1.5rem;
 }
 
 .text-center {
@@ -583,56 +615,22 @@ video {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-}
-
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
 }
 
-.font-bold {
-  font-weight: 700;
-}
-
-.text-blue-600 {
+.text-black {
   --tw-text-opacity: 1;
-  color: rgb(37 99 235 / var(--tw-text-opacity, 1));
+  color: rgb(0 0 0 / var(--tw-text-opacity, 1));
 }
 
-.text-blue-50 {
-  --tw-text-opacity: 1;
-  color: rgb(239 246 255 / var(--tw-text-opacity, 1));
-}
-
-.text-blue-700 {
-  --tw-text-opacity: 1;
-  color: rgb(29 78 216 / var(--tw-text-opacity, 1));
-}
-
-.text-white {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-}
-
-.text-purple-600 {
-  --tw-text-opacity: 1;
-  color: rgb(147 51 234 / var(--tw-text-opacity, 1));
-}
-
-.hover\:text-purple-600:hover {
-  --tw-text-opacity: 1;
-  color: rgb(147 51 234 / var(--tw-text-opacity, 1));
-}
-
-.hover\:text-purple-800:hover {
-  --tw-text-opacity: 1;
-  color: rgb(107 33 168 / var(--tw-text-opacity, 1));
-}
-
-.hover\:text-purple-700:hover {
+.text-purple-700 {
   --tw-text-opacity: 1;
   color: rgb(126 34 206 / var(--tw-text-opacity, 1));
+}
+
+.hover\:text-black:hover {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity, 1));
 }
