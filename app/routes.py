@@ -6,6 +6,7 @@ main = Blueprint('main', __name__)
 def home():
     return render_template('index.html')
 
-@main.route('/plot')
+@main.route('/explore')
 def plot():    
-    return render_template('plot.html')
+    return render_template('explore.html')
+
