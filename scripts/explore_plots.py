@@ -16,7 +16,7 @@ def licence_plates_categories(dataset):
                 y='license_plate', 
                 x='count', 
                 color='product_type_name', 
-                title="Categories realised by each car",
+                title="Categories realized by each car",
                 labels={'product_type_name': 'Category', 'license_plate': 'License plate', 'count': 'Amount'},
                 hover_data=['product_type_name', 'license_plate', 'count'],
                 color_discrete_sequence=["#222222", "#999999", "#6f03fc", "#c800ff", "#ff005d","#3d0000"])
