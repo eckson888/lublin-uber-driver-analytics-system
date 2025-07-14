@@ -6,8 +6,8 @@ def transform(datasets):
     datasets_with_id = []
     for idx, df in enumerate(datasets):
         df_copy = df.copy()
-        df_copy['driver_id'] = idx
-        df_copy = df_copy.reindex(columns=all_columns.union(['driver_id']))
+        df_copy['user_id'] = idx
+        df_copy = df_copy.reindex(columns=all_columns.union(['user_id']))
         datasets_with_id.append(df_copy)
 
     dataset_combined = pd.concat(datasets_with_id, ignore_index=True)

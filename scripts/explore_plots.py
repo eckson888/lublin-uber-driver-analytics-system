@@ -91,7 +91,7 @@ def average_earnings_per_driver(dataset_):
     dataset['begintrip_timestamp_local']=pd.to_datetime(dataset['begintrip_timestamp_local'], format='mixed')
     
     grouped = dataset.groupby(dataset.begintrip_timestamp_local.dt.to_period('M'))
-    month_avg_earnings = grouped['driver_upfront_fare_local'].sum() / grouped['driver_id'].nunique()
+    month_avg_earnings = grouped['driver_upfront_fare_local'].sum() / grouped['user_id'].nunique()
     month_avg_earnings = month_avg_earnings.reset_index(name='Monthly Average')
     month_avg_earnings = month_avg_earnings.sort_values(by='begintrip_timestamp_local', ascending=True)
     month_avg_earnings['begintrip_timestamp_local'] = month_avg_earnings['begintrip_timestamp_local'].dt.strftime('%b %Y')

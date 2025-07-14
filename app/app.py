@@ -21,6 +21,8 @@ def create_app():
     login_manager.login_view = 'auth.login' 
     
     from app.model import User
+    
+    with app.app_context():db.create_all()
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -30,6 +32,9 @@ def create_app():
     app.register_blueprint(auth)    
         
     from .main import main
-    app.register_blueprint(main)
+    app.register_blueprint(main)    
+    
+    from .verify import verify
+    app.register_blueprint(verify)   
         
     return app

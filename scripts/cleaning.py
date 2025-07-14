@@ -85,11 +85,11 @@ def clean_data(datasets_combined):
     datasets_combined['license_plate'] = datasets_combined['license_plate'].replace({'\\N': 'undefined'})
     
     #TODO: change this so it works with geo/api data    
-    if 'pickup_street' in datasets_combined.columns:
-        datasets_combined['pickup_street'] = datasets_combined['pickup_street'].str.lower()
-        datasets_combined['pickup_city'] = datasets_combined['pickup_city'].str.lower()
-        datasets_combined['destination_street'] = datasets_combined['destination_street'].str.lower()
-        datasets_combined['destination_city'] = datasets_combined['destination_city'].str.lower()      
+    # if 'pickup_street' in datasets_combined.columns:
+    #     datasets_combined['pickup_street'] = datasets_combined['pickup_street'].str.lower()
+    #     datasets_combined['pickup_city'] = datasets_combined['pickup_city'].str.lower()
+    #     datasets_combined['destination_street'] = datasets_combined['destination_street'].str.lower()
+    #     datasets_combined['destination_city'] = datasets_combined['destination_city'].str.lower()      
 
 
     return datasets_combined
