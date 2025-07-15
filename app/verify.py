@@ -90,7 +90,7 @@ def upload():
 
             except DuplicateTripError as e:
                 error = str(e)
-            #TODO wyjebac to poznie
+            #TODO wyjebac to pozniej w chuj
             except SQLAlchemyError as e:
                 error = f"Błąd bazy danych: {e}" 
                 
