@@ -16,7 +16,7 @@ project_root = Path(__file__).resolve().parent.parent
 merged_data_dir = project_root / "data" / "merged"
 dataset = pd.read_csv(f"{merged_data_dir}/combined_cleaned_dataset.csv",encoding='cp1250', sep=",")
 main = Blueprint('main', __name__)
-
+#ee
 @main.route('/')
 def home():
     return render_template('index.html')
