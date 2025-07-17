@@ -1,19 +1,15 @@
 import pandas as pd
-import plotly.io as pio
 
 from app.app import db
 from io import StringIO
-from app.model import User
 from app.exceptions import DuplicateTripError
 from pathlib import Path
 from sqlalchemy import select, tuple_, MetaData, Table
-from sqlalchemy.sql import text
 from scripts import explore_plots as ep
 from sqlalchemy.exc import SQLAlchemyError
 from flask import Blueprint, render_template
-from werkzeug.security import check_password_hash
 from flask import request, redirect, url_for, render_template, flash
-from flask_login import login_user, logout_user, login_required, current_user
+from flask_login import login_required, current_user
 
 verify = Blueprint('verify', __name__)
 project_root = Path(__file__).resolve().parent.parent
@@ -65,8 +61,7 @@ def normalize_upload(file_stream):
 @login_required
 def upload():
     error = None
-    if current_user.isVerified:
-        flash("Your account is already verified!", "info")
+    if current_user.isVerified:        
         return redirect(url_for('main.home'))    
     
     if request.method == 'POST':
@@ -90,7 +85,7 @@ def upload():
 
             except DuplicateTripError as e:
                 error = str(e)
-            #TODO wyjebac to pozniej w chuj
+            
             except SQLAlchemyError as e:
                 error = f"Błąd bazy danych: {e}" 
                 

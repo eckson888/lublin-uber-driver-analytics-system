@@ -15,7 +15,7 @@ def login():
         if user and check_password_hash(user.password, request.form['password']):
             login_user(user)
             return redirect(url_for('main.home'))
-        flash('Invalid credentials')
+        flash('Złe dane logowania')
     return render_template('login.html')
 
 @auth.route('/register', methods=['GET', 'POST'])
@@ -30,7 +30,7 @@ def register():
         new_user = User(username=username, password=password)
         db.session.add(new_user)
         db.session.commit()
-        flash("Registered Successfully!")
+        flash("Zarejestrowano!")
         return redirect(url_for('auth.login'))
     return render_template('register.html')
 
@@ -40,21 +40,3 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for('main.home'))
-
-
-
-# @auth.route('/add', methods=['GET', 'POST'])
-# def add():
-#     if request.method == 'POST':
-#         username = request.form['username']
-#         password = request.form['password']       
-
-#         hashed_password = generate_password_hash(password, method='scrypt')
-
-#         new_user = User(username=username, password=hashed_password)
-#         db.session.add(new_user)
-#         db.session.commit()
-
-#         flash('User added successfully!', 'success')
-#         return redirect(url_for('main.explore_plots'))  # Assuming you have an 'explore' route
-#     return render_template('add.html')

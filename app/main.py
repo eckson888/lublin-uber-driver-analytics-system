@@ -2,15 +2,11 @@ import pandas as pd
 import plotly.io as pio
 
 from app.app import db
-from io import StringIO
-from app.model import User
 from pathlib import Path
 from scripts import explore_plots as ep
-from sqlalchemy.exc import SQLAlchemyError
 from flask import Blueprint, render_template
-from werkzeug.security import check_password_hash
-from flask import request, redirect, url_for, render_template, flash
-from flask_login import login_user, logout_user, login_required, current_user
+from flask import render_template
+from flask_login import login_required
 
 project_root = Path(__file__).resolve().parent.parent
 merged_data_dir = project_root / "data" / "merged"
