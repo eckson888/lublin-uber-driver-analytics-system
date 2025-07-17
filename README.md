@@ -4,7 +4,7 @@ they can upload it on the webpage to verify their account. If the verification p
 trends in earnings, best places to earn and in the future - check which incoming days, hours or localisations are the most suitable for earning! Currently the system holds and analyses over 30.000 trip records collected from 6 seperate drivers.
 
 **Caution!**: The data downloaded directly from Uber does NOT contain any private information such as names, addresses etc. It only contains trip
-data such as the price, timestamps, surge prices and many many more misc data regarding the trip itself.
+data such as the price, timestamps, surge prices and many many more misc data regarding the trip itself (Localisation data is not always present in the file. If it is, its only pickup and dropoff coordinates clamped to 2 digits eg. 51.25).
 
 # Tech Stack:
   - **Python** for data operations, SQL integration and data security:
@@ -13,7 +13,7 @@ data such as the price, timestamps, surge prices and many many more misc data re
       - NumPy for numerical operations
       - Plotly/Seaborn for graphs
   - **PostgreSQL** for data storage, selection and querying
-  - Tailwind for easy CSS work.
+  - **Tailwind** for easy CSS work.
   - (SOON) ML algorithms for timeserie and localization prediction, model evaluation with MLFlow.
 
 # The login page
