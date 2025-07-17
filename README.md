@@ -13,6 +13,7 @@ data such as the price, timestamps, surge prices and many many more misc data re
       - NumPy for numerical operations
       - Plotly/Seaborn for graphs
   - **PostgreSQL** for data storage, selection and querying
+  - Tailwind for easy CSS work.
   - (SOON) ML algorithms for timeserie and localization prediction, model evaluation with MLFlow.
 
 # The login page
