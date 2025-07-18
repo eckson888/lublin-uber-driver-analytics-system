@@ -4,13 +4,13 @@ import pandas as pd
 def clean_data(datasets_combined):
     datasets_combined = datasets_combined.copy() 
        
-    drop_columns=["city_id","currency_code","timezone","flow","request_timestamp_utc","begintrip_timestamp_utc","dropoff_timestamp_utc",
+    drop_columns=["currency_code","timezone","flow","request_timestamp_utc","begintrip_timestamp_utc","dropoff_timestamp_utc",
                 "promotion_usd","credits_usd","driver_upfront_fare_usd","original_fare_usd","base_fare_usd","surge_fare_usd","minimum_fare_roundup_usd",
                 "per_mile_fare_usd","per_minute_fare_usd","cancellation_fee_usd","rounding_down_amount_usd","service_fee_usd","toll_amount_usd",
-                "booking_fee_usd","earnings_boost_usd","wait_time_fare_usd","long_distance_surcharge_usd","vehicle_trip_number","cancellation_fee_local","driver_trip_number"]
+                "booking_fee_usd","earnings_boost_usd","wait_time_fare_usd","long_distance_surcharge_usd","vehicle_trip_number","driver_trip_number"]
 
     for column in drop_columns:
-        datasets_combined.drop(column, axis='columns', inplace=True)
+        datasets_combined.drop([column], axis=1, inplace=True)
 
     datasets_combined = datasets_combined[datasets_combined['is_completed'] != False]
     
@@ -36,49 +36,75 @@ def clean_data(datasets_combined):
     datasets_combined['wait_time_delta'] = datasets_combined['actual_wait_time'] - datasets_combined['driver_pickup_eta']   
 
 
+
     # data cleaning/dimension reduction
     
-    datasets_combined.drop("status", axis='columns', inplace=True)
-    datasets_combined.drop("is_completed", axis='columns', inplace=True)
-    datasets_combined.drop("global_product_name", axis='columns', inplace=True)
-    datasets_combined.drop("has_destination", axis='columns', inplace=True)
-    datasets_combined.drop("is_pool_matched", axis='columns', inplace=True)
-    datasets_combined.drop("is_flat_rate", axis='columns', inplace=True)
-    datasets_combined.drop("rounding_down_amount_local", axis='columns', inplace=True)
-    datasets_combined.drop("booking_fee_local", axis='columns', inplace=True)
-    datasets_combined.drop("toll_amount_local", axis='columns', inplace=True)
-    datasets_combined.drop("earnings_boost_local", axis='columns', inplace=True)
-    datasets_combined.drop("driver_cancellation_reason", axis='columns', inplace=True)
-    datasets_combined.drop("guaranteed_surge_multiplier", axis='columns', inplace=True)
-    datasets_combined.drop("cancellation_type", axis='columns', inplace=True)
-    datasets_combined.drop("is_directed_dispatch_trip", axis='columns', inplace=True)
-
-    datasets_combined['promotion_local'] = datasets_combined['promotion_local'].replace({'\\N': '0'})
-    datasets_combined['promotion_local'] = datasets_combined['promotion_local'].fillna('0')
-    datasets_combined['service_fee_local'] = datasets_combined['service_fee_local'].replace({'\\N': '0'})
-    datasets_combined['service_fee_local'] = datasets_combined['service_fee_local'].fillna('0')
-    datasets_combined['wait_time_fare_local'] = datasets_combined['wait_time_fare_local'].replace({'\\N': '0'})
-    datasets_combined['wait_time_fare_local'] = datasets_combined['wait_time_fare_local'].fillna('0')
-    datasets_combined['long_distance_surcharge_local'] = datasets_combined['long_distance_surcharge_local'].replace({'\\N': '0'})
-    datasets_combined['long_distance_surcharge_local'] = datasets_combined['long_distance_surcharge_local'].fillna('0')
-    datasets_combined['wait_duration_minutes'] = datasets_combined['wait_duration_minutes'].replace({'\\N': '0'})
-    datasets_combined['wait_duration_minutes'] = datasets_combined['wait_duration_minutes'].fillna('0')
-    datasets_combined['minimum_fare_roundup_local'] = datasets_combined['minimum_fare_roundup_local'].replace({'\\N': '0'})
-    datasets_combined['minimum_fare_roundup_local'] = datasets_combined['minimum_fare_roundup_local'].fillna('0')
-    datasets_combined['concierge_source_type'] = datasets_combined['concierge_source_type'].replace({'\\N': 'none'})
-    datasets_combined['concierge_source_type'] = datasets_combined['concierge_source_type'].fillna('none')
-    datasets_combined['credits_local'] = datasets_combined['credits_local'].replace({'\\N': '0'})
-    datasets_combined['credits_local'] = datasets_combined['credits_local'].fillna('0')
+    datasets_combined.drop("request_timestamp_local",axis='columns', inplace=True)
+    datasets_combined.drop("begintrip_timestamp_local",axis='columns', inplace=True)
+    datasets_combined.drop("dropoff_timestamp_local",axis='columns', inplace=True)
+    # datasets_combined.drop("status", axis='columns', inplace=True)
+    # datasets_combined.drop("is_completed", axis='columns', inplace=True)
+    # datasets_combined.drop("is_flat_rate", axis='columns', inplace=True)
+    # datasets_combined.drop("rounding_down_amount_local", axis='columns', inplace=True)
+    # datasets_combined.drop("booking_fee_local", axis='columns', inplace=True)
+    # datasets_combined.drop("driver_cancellation_reason", axis='columns', inplace=True)
+    # datasets_combined.drop("guaranteed_surge_multiplier", axis='columns', inplace=True)
+    # datasets_combined.drop("cancellation_type", axis='columns', inplace=True)
+    # datasets_combined.drop("is_directed_dispatch_trip", axis='columns', inplace=True)
+    # datasets_combined.drop("has_destination", axis='columns', inplace=True)
+    #datasets_combined.drop("global_product_name", axis='columns', inplace=True)
+    # datasets_combined.drop("is_pool_matched", axis='columns', inplace=True)
+    # datasets_combined.drop("toll_amount_local", axis='columns', inplace=True)
+    # datasets_combined.drop("earnings_boost_local", axis='columns', inplace=True)
     
-    datasets_combined['surge_fare_local'] = datasets_combined['surge_fare_local'].fillna('0')
-    datasets_combined['per_minute_fare_local'] = datasets_combined['per_minute_fare_local'].fillna('0')
-    datasets_combined['fare_duration_minutes'] = datasets_combined['fare_duration_minutes'].fillna('0')
-    datasets_combined['base_fare_local'] = datasets_combined['base_fare_local'].fillna('0')
-    datasets_combined['service_fee'] = datasets_combined['service_fee'].fillna('0')
-    datasets_combined['per_mile_fare_local'] = datasets_combined['per_mile_fare_local'].fillna('0')
-    datasets_combined['original_fare_local'] = datasets_combined['original_fare_local'].fillna('0')
-    datasets_combined['ufp_type'] = datasets_combined['ufp_type'].fillna('none')
-    datasets_combined['fare_distance_miles'] = datasets_combined['fare_distance_miles'].fillna('0')
+    
+    numeric_cols = ['promotion_local', 'service_fee_local', 'wait_time_fare_local','long_distance_surcharge_local', 'wait_duration_minutes',
+                    'minimum_fare_roundup_local', 'credits_local','surge_fare_local', 'per_minute_fare_local', 'fare_duration_minutes',
+                    'base_fare_local', 'service_fee', 'per_mile_fare_local','original_fare_local', 'fare_distance_miles']
+
+    for col in numeric_cols:
+        datasets_combined[col] = (
+            datasets_combined[col]
+            .replace({'\\N': '0'})
+            .fillna('0')
+            .astype(float)
+        )
+
+    text_cols = ['concierge_source_type', 'ufp_type']
+    for col in text_cols:
+        datasets_combined[col] = (
+            datasets_combined[col]
+            .replace({'\\N': 'none'})
+            .fillna('none')
+        )
+
+
+    # datasets_combined['promotion_local'] = datasets_combined['promotion_local'].replace({'\\N': '0'})
+    # datasets_combined['promotion_local'] = datasets_combined['promotion_local'].fillna('0')
+    # datasets_combined['service_fee_local'] = datasets_combined['service_fee_local'].replace({'\\N': '0'})
+    # datasets_combined['service_fee_local'] = datasets_combined['service_fee_local'].fillna('0')
+    # datasets_combined['wait_time_fare_local'] = datasets_combined['wait_time_fare_local'].replace({'\\N': '0'})
+    # datasets_combined['wait_time_fare_local'] = datasets_combined['wait_time_fare_local'].fillna('0')
+    # datasets_combined['long_distance_surcharge_local'] = datasets_combined['long_distance_surcharge_local'].replace({'\\N': '0'})
+    # datasets_combined['long_distance_surcharge_local'] = datasets_combined['long_distance_surcharge_local'].fillna('0')
+    # datasets_combined['wait_duration_minutes'] = datasets_combined['wait_duration_minutes'].replace({'\\N': '0'})
+    # datasets_combined['wait_duration_minutes'] = datasets_combined['wait_duration_minutes'].fillna('0')
+    # datasets_combined['minimum_fare_roundup_local'] = datasets_combined['minimum_fare_roundup_local'].replace({'\\N': '0'})
+    # datasets_combined['minimum_fare_roundup_local'] = datasets_combined['minimum_fare_roundup_local'].fillna('0')
+    # datasets_combined['concierge_source_type'] = datasets_combined['concierge_source_type'].replace({'\\N': 'none'})
+    # datasets_combined['concierge_source_type'] = datasets_combined['concierge_source_type'].fillna('none')
+    # datasets_combined['credits_local'] = datasets_combined['credits_local'].replace({'\\N': '0'})
+    # datasets_combined['credits_local'] = datasets_combined['credits_local'].fillna('0')
+    
+    # datasets_combined['surge_fare_local'] = datasets_combined['surge_fare_local'].fillna('0')
+    # datasets_combined['per_minute_fare_local'] = datasets_combined['per_minute_fare_local'].fillna('0')
+    # datasets_combined['fare_duration_minutes'] = datasets_combined['fare_duration_minutes'].fillna('0')
+    # datasets_combined['base_fare_local'] = datasets_combined['base_fare_local'].fillna('0')
+    # datasets_combined['service_fee'] = datasets_combined['service_fee'].fillna('0')
+    # datasets_combined['per_mile_fare_local'] = datasets_combined['per_mile_fare_local'].fillna('0')
+    # datasets_combined['original_fare_local'] = datasets_combined['original_fare_local'].fillna('0')
+    # datasets_combined['ufp_type'] = datasets_combined['ufp_type'].fillna('none')
+    # datasets_combined['fare_distance_miles'] = datasets_combined['fare_distance_miles'].fillna('0')
 
     datasets_combined['license_plate'] = datasets_combined['license_plate'].str.replace(r'\s+', '', regex=True)
     datasets_combined['license_plate'] = datasets_combined['license_plate'].fillna('\\N')
