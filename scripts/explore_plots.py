@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+
 import plotly as pt
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -10,8 +11,8 @@ from plotly_calplot import calplot
 
 
 def licence_plates_categories(dataset):    
-    df_counts = dataset.groupby(['product_type_name', 'license_plate']).size().reset_index(name='count')
-    df_counts_sorted = df_counts.sort_values(by='count', ascending=False)
+    # df_counts = dataset.groupby(['product_type_name', 'license_plate']).size().reset_index(name='count')
+    df_counts_sorted = dataset.sort_values(by='count', ascending=False)
     fig = px.bar(df_counts_sorted, 
                 y='license_plate', 
                 x='count', 

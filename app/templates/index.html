@@ -42,6 +42,10 @@
             <a href="{{ url_for('verify.upload') }}" class="flex items-center justify-center text-xl text-white hover:text-purple-500 hover:bg-black p-2 rounded-3xl min-h-12 bg-purple-700 shadow-shad_button  min-w-36 mx-3 transition-colors duration-300">
                 <span>Verify your account</span>
             </a>
+
+            <a href="{{ url_for('auth.logout') }}" class="flex items-center justify-center text-xl text-white hover:text-purple-500 hover:bg-black p-2 rounded-3xl min-h-12 bg-purple-700 shadow-shad_button  min-w-36 mx-3 transition-colors duration-300">
+                <span>Logout</span>
+            </a>
             {% endif %}
 
             {% endif %}

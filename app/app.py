@@ -4,10 +4,15 @@ from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
+
+
 load_dotenv()
 login_manager = LoginManager()
 app = Flask(__name__)
+
+#TODO wywalic
 app.secret_key = 'dev'
+
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("POSTGRES_URI")
 db = SQLAlchemy(app)
 
@@ -22,7 +27,7 @@ def create_app():
     
     from app.model import User
     
-    with app.app_context():db.create_all()
+    with app.app_context():db.create_all()   
 
     @login_manager.user_loader
     def load_user(user_id):

@@ -7,6 +7,7 @@ from scripts import explore_plots as ep
 from flask import Blueprint, render_template
 from flask import render_template
 from flask_login import login_required
+from app.queries import get_licence_plates
 
 project_root = Path(__file__).resolve().parent.parent
 merged_data_dir = project_root / "data" / "merged"
@@ -20,9 +21,9 @@ def home():
 
 @main.route('/explore')
 @login_required
-def explore_plots():   
+def explore_plots():         
     
-    plot_categories = ep.licence_plates_categories(dataset)
+    plot_categories = ep.licence_plates_categories(pd.DataFrame.from_dict(get_licence_plates(db)))
     plot_categories_html = pio.to_html(plot_categories, full_html=False, include_plotlyjs='cdn')
     
     plot_calendar = ep.calendar_summary(dataset)

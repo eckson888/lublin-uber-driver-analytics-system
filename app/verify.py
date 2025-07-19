@@ -125,8 +125,7 @@ def verify_upload(uploaded_dataframe):
     
     pairs = [
     (int(row['begintrip_unix_time']), str(row['license_plate']))
-    for _, row in key_pairs.iterrows()
-]
+    for _, row in key_pairs.iterrows()]
 
     if not pairs:
         raise ValueError("Brak odpowiednich par kluczy w pliku CSV")
