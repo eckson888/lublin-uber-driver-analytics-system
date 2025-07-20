@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import plotly.express as px
+import plotly.graph_objects as go
 
 from plotly_calplot import calplot
 
@@ -72,19 +73,50 @@ def calendar_summary(dataset_):
     
     return fig
 
-
-
-def median_trip_costs(dataset_):
-    dataset=dataset_.copy()
-    dataset['begintrip_timestamp_local'] = pd.to_datetime(dataset['begintrip_timestamp_local'], format='mixed')
-    month_mean_trip_costs = dataset.groupby(dataset.begintrip_timestamp_local.dt.to_period('M'))['driver_upfront_fare_local'].mean().reset_index(name='Monthly Mean')
-    month_mean_trip_costs = month_mean_trip_costs.sort_values(by='begintrip_timestamp_local', ascending=True)
-    month_mean_trip_costs['begintrip_timestamp_local'] = month_mean_trip_costs['begintrip_timestamp_local'].dt.strftime('%b %Y')
-    month_mean_trip_costs = month_mean_trip_costs.rename(columns={"begintrip_timestamp_local": "Month_Year"})
+def median_trip_costs(dataset_):    
     
-    fig = px.line(data_frame=month_mean_trip_costs,x='Month_Year',y="Monthly Mean",title="Median of trip prices across months")
-    fig.update_traces(line_color='#000000')
-    fig.update_layout(height=500, font=dict(family='Arial', size=14, color='black'),plot_bgcolor="#999999")
+    dataset=dataset_.copy()
+    dataset['per_km_fare'] = dataset['per_mile_fare'] / 1.60934
+    dataset['begintrip_timestamp'] = pd.to_datetime(dataset['begintrip_timestamp'], unit='s')
+    
+    month_mean_per_mile_fare = dataset.groupby(dataset.begintrip_timestamp.dt.to_period('M'))['per_km_fare'].mean().reset_index(name='Monthly Per Mile Mean')    
+    month_mean_per_mile_fare = month_mean_per_mile_fare.sort_values(by='begintrip_timestamp', ascending=True)
+    month_mean_per_mile_fare['begintrip_timestamp'] = month_mean_per_mile_fare['begintrip_timestamp'].dt.strftime('%b %Y')
+    month_mean_per_mile_fare = month_mean_per_mile_fare.rename(columns={"begintrip_timestamp": "Month_Year"})
+    
+    # month_mean_per_minute_fare = dataset.groupby(dataset.begintrip_timestamp.dt.to_period('M'))['per_minute_fare'].mean().reset_index(name='Monthly Per Minute Mean')
+    # month_mean_per_minute_fare = month_mean_per_minute_fare.sort_values(by='begintrip_timestamp', ascending=True)
+    # month_mean_per_minute_fare['begintrip_timestamp'] = month_mean_per_minute_fare['begintrip_timestamp'].dt.strftime('%b %Y')
+    # month_mean_per_minute_fare = month_mean_per_minute_fare.rename(columns={"begintrip_timestamp": "Month_Year"})
+    
+    fig = px.line(
+        data_frame=month_mean_per_mile_fare,
+        x='Month_Year',
+        y="Monthly Per Mile Mean",
+        title="Mediana stawek za km na przestrzeni miesiecy"
+        
+    )
+
+    # fig.add_trace(
+    #     go.Scatter(
+    #         x=month_mean_per_minute_fare['Month_Year'],
+    #         y=month_mean_per_minute_fare['Monthly Per Minute Mean'],
+    #         mode='lines',
+    #         name='Monthly Per Minute Mean',
+    #         line=dict(color='blue')  # customize if needed
+    #     )
+    # )
+    fig.update_yaxes(range=[1.0, 2.0])
+    fig.update_traces(line_color='#ff005d')    
+    fig.update_layout(
+        height=500,
+        font=dict(family='Arial', size=14, color='black'),
+        plot_bgcolor="#aaaaaa",
+        legend_title_text='Fare Type'
+    )
+    
+
+
     return fig
 
 def average_earnings_per_driver(dataset_):

@@ -29,7 +29,7 @@ def explore_plots():
     plot_calendar = ep.calendar_summary(queries.get_trip_calendar(db))
     plot_calendar_html = pio.to_html(plot_calendar, full_html=False, include_plotlyjs='cdn')
     
-    plot_median = ep.median_trip_costs(dataset)
+    plot_median = ep.median_trip_costs(queries.get_fares(db))
     plot_median_html = pio.to_html(plot_median, full_html=False, include_plotlyjs='cdn')
     
     plot_average = ep.average_earnings_per_driver(dataset)

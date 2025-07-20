@@ -1,7 +1,7 @@
 import pandas as pd
 from sqlalchemy import select, func
 from sqlalchemy.orm import Session
-from app.model import User, CleanedData 
+from app.model import CleanedData 
 
 
 def get_licence_plates(db):
@@ -16,5 +16,12 @@ def get_trip_calendar(db):
         statement=select(CleanedData.begintrip_unix_time,CleanedData.user_id)
         time_and_drivers=session.execute(statement).all()
         df = pd.DataFrame(time_and_drivers, columns=['begintrip_timestamp', 'driver_id'])
+        return df
+    
+def get_fares(db):
+    with Session(db.engine) as session:
+        statement=select(CleanedData.per_mile_fare_local, CleanedData.per_minute_fare_local,CleanedData.begintrip_unix_time,CleanedData.user_id)
+        fares_and_dates=session.execute(statement).all()
+        df = pd.DataFrame(fares_and_dates,columns=['per_mile_fare','per_minute_fare','begintrip_timestamp','driver_id'])
         return df
     
