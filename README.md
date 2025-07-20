@@ -24,6 +24,9 @@ data such as the price, timestamps, surge prices and many many more misc data re
 <img width="1854" height="920" alt="main" src="https://github.com/user-attachments/assets/e88e59ad-bbdb-4b38-a426-42c48c550506" />
 
 # General data visualisations - all interactive!
+
+<img width="1496" height="417" alt="calplot" src="https://github.com/user-attachments/assets/6d3e80eb-631a-4158-8f3e-c733b232b776" />
+
 <img width="1720" height="875" alt="graph1" src="https://github.com/user-attachments/assets/7923e2f3-1605-4501-9840-71732a121fa7" />
 
 <img width="1527" height="741" alt="heatmap" src="https://github.com/user-attachments/assets/0b194cde-0588-4871-a36c-36c8a7729826" />
