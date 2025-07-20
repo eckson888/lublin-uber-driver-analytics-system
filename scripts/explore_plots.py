@@ -46,32 +46,33 @@ def licence_plates_categories(dataset):
 def calendar_summary(dataset_):
     dataset = dataset_.copy()
     
-    dataset['begintrip_timestamp_local'] = pd.to_datetime(dataset['begintrip_timestamp_local'],format='mixed')
-    dataset['day_of_year'] = dataset['begintrip_timestamp_local'].dt.day_of_year
-    dataset = dataset.dropna(subset=['day_of_year'])
-    dataset['day_of_year'] = dataset['day_of_year'].astype(int)
-
-    day_of_year_counts = dataset.groupby('day_of_year').size().reset_index(name='count')
-    reference_year = 2025
-    day_of_year_counts['date'] = pd.to_datetime(day_of_year_counts['day_of_year'].astype(str), format='%j')
-    day_of_year_counts['date'] = day_of_year_counts['date'].apply(lambda x: x.replace(year=reference_year))
-
+    dataset['begintrip_timestamp'] = pd.to_datetime(dataset['begintrip_timestamp'], unit='s').dt.date
+    trips_per_driver_day = dataset.groupby(['begintrip_timestamp', 'driver_id']).size().reset_index(name='trips')
+    trips_per_driver_day['year'] = pd.to_datetime(trips_per_driver_day['begintrip_timestamp']).dt.year
+    
+    daily_medians = trips_per_driver_day.groupby(['begintrip_timestamp', 'year']).agg(
+        median_trips_per_driver=('trips', 'median'),
+        driver_count=('driver_id', 'count')
+    ).reset_index()
+    
 
     fig = calplot(
-        day_of_year_counts,  
-        x='date',            
-        y='count',
-        title="Heatmap of each day in a year",
+        daily_medians,  
+        x='begintrip_timestamp',            
+        y='median_trips_per_driver',
+        title="",
         colorscale='RdPu'
     )
 
     fig.update_layout(        
         font=dict(family='Arial', size=14, color='black'),
-        height=500
-        )
-    
+        height=800
+        )   
+
     
     return fig
+
+
 
 def median_trip_costs(dataset_):
     dataset=dataset_.copy()
