@@ -24,4 +24,10 @@ def get_fares(db):
         fares_and_dates=session.execute(statement).all()
         df = pd.DataFrame(fares_and_dates,columns=['per_mile_fare','per_minute_fare','begintrip_timestamp','driver_id'])
         return df
-    
+
+def get_trip_prices(db):
+    with Session(db.engine) as session:
+        statement=select(CleanedData.begintrip_unix_time,CleanedData.driver_upfront_fare_local,CleanedData.user_id)
+        result = session.execute(statement).all()
+        df = pd.DataFrame(result,columns=['begintrip_timestamp','driver_upfront_fare','driver_id'])
+        return df

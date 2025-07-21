@@ -32,8 +32,11 @@ def explore_plots():
     plot_median = ep.median_trip_costs(queries.get_fares(db))
     plot_median_html = pio.to_html(plot_median, full_html=False, include_plotlyjs='cdn')
     
-    plot_average = ep.average_earnings_per_driver(dataset)
-    plot_average_html = pio.to_html(plot_average, full_html=False, include_plotlyjs='cdn')
+    plot_average_monthly = ep.average_earnings_per_driver(queries.get_trip_prices(db))
+    plot_average_monthly_html = pio.to_html(plot_average_monthly, full_html=False, include_plotlyjs='cdn')
+    
+    plot_average_daily = ep.average_daily_earnings_over_time(queries.get_trip_prices(db))
+    plot_average_daily_html = pio.to_html(plot_average_daily, full_html=False, include_plotlyjs='cdn')
     
     plot_pickups_gradient = ep.pickups_heatmap(dataset)
     plot_pickups_gradient_html = pio.to_html(plot_pickups_gradient, full_html=False, include_plotlyjs='cdn')
@@ -45,7 +48,8 @@ def explore_plots():
                            plot_categories=plot_categories_html,
                            plot_calendar=plot_calendar_html,
                            plot_median=plot_median_html,
-                           plot_average=plot_average_html,
+                           plot_average_monthly=plot_average_monthly_html,
+                           plot_average_daily=plot_average_daily_html,
                            plot_pickups_gradient=plot_pickups_gradient_html,
                            plot_dropoffs_scatter=plot_dropoffs_scatter_html)
 

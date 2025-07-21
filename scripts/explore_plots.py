@@ -61,7 +61,7 @@ def calendar_summary(dataset_):
         daily_medians,  
         x='begintrip_timestamp',            
         y='median_trips_per_driver',
-        title="",
+        title="Mediana przejazdów na kierowce w kazdy dzien",
         colorscale='RdPu'
     )
 
@@ -122,23 +122,49 @@ def median_trip_costs(dataset_):
 def average_earnings_per_driver(dataset_):
     dataset = dataset_.copy()
     
-    dataset['begintrip_timestamp_local']=pd.to_datetime(dataset['begintrip_timestamp_local'], format='mixed')
-    
-    grouped = dataset.groupby(dataset.begintrip_timestamp_local.dt.to_period('M'))
-    month_avg_earnings = grouped['driver_upfront_fare_local'].sum() / grouped['user_id'].nunique()
-    month_avg_earnings = month_avg_earnings.reset_index(name='Monthly Average')
-    month_avg_earnings = month_avg_earnings.sort_values(by='begintrip_timestamp_local', ascending=True)
-    month_avg_earnings['begintrip_timestamp_local'] = month_avg_earnings['begintrip_timestamp_local'].dt.strftime('%b %Y')
+    dataset['begintrip_timestamp'] = pd.to_datetime(dataset['begintrip_timestamp'], unit='s')
+    dataset['month'] = dataset['begintrip_timestamp'].dt.to_period('M')
+
+    driver_monthly_totals = dataset.groupby(['month', 'driver_id'])['driver_upfront_fare'].sum().reset_index()
+
+    monthly_avg = driver_monthly_totals.groupby('month')['driver_upfront_fare'].mean().reset_index(name='Monthly Average')
+    monthly_avg['month'] = monthly_avg['month'].astype(str)    
 
     fig = px.line(
-        data_frame=month_avg_earnings,
-        x='begintrip_timestamp_local',
+        data_frame=monthly_avg,
+        x='month',
         y="Monthly Average",
         title="Average monthly earnings per driver")
 
-    fig.update_traces(line_color='#000000')
-    fig.update_layout(height=500, font=dict(family='Arial', size=14, color='black'),plot_bgcolor="#999999")
+    fig.update_traces(line_color='#6f03fc')
+    fig.update_layout(height=600, font=dict(family='Arial', size=14, color='black'),plot_bgcolor="#999999")
     return fig
+
+def average_daily_earnings_over_time(dataset_):
+    dataset = dataset_.copy() 
+
+    dataset['begintrip_timestamp'] = pd.to_datetime(dataset['begintrip_timestamp'], unit='s')
+    dataset['month'] = dataset['begintrip_timestamp'].dt.to_period('M')
+    dataset['trip_date'] = dataset['begintrip_timestamp'].dt.date
+
+    daily_earnings = dataset.groupby(['driver_id', 'trip_date'])['driver_upfront_fare'].sum().reset_index()
+    daily_earnings['month'] = pd.to_datetime(daily_earnings['trip_date']).dt.to_period('M')
+
+    driver_monthly_avg = daily_earnings.groupby(['month', 'driver_id'])['driver_upfront_fare'].mean().reset_index()
+
+    monthly_avg = driver_monthly_avg.groupby('month')['driver_upfront_fare'].mean().reset_index(name='Monthly Average')
+    monthly_avg['month'] = monthly_avg['month'].astype(str)
+
+    fig = px.line(
+        data_frame=monthly_avg,
+        x='month',
+        y="Monthly Average",
+        title="Average monthly earnings per driver")
+
+    fig.update_traces(line_color="#fc03df")
+    fig.update_layout(height=600, font=dict(family='Arial', size=14, color='black'),plot_bgcolor="#999999")
+    return fig
+
 
 def pickups_heatmap(dataset_):
     dataset = dataset_.copy()
@@ -200,4 +226,5 @@ def dropoffs_scatter(dataset_):
     )
 
     return fig
+
 
