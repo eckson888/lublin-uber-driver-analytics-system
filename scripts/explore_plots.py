@@ -79,10 +79,10 @@ def median_trip_costs(dataset_):
     dataset['per_km_fare'] = dataset['per_mile_fare'] / 1.60934
     dataset['begintrip_timestamp'] = pd.to_datetime(dataset['begintrip_timestamp'], unit='s')
     
-    month_mean_per_mile_fare = dataset.groupby(dataset.begintrip_timestamp.dt.to_period('M'))['per_km_fare'].mean().reset_index(name='Monthly Per Mile Mean')    
+    month_mean_per_mile_fare = dataset.groupby(dataset.begintrip_timestamp.dt.to_period('M'))['per_km_fare'].mean().reset_index(name='zł/km')    
     month_mean_per_mile_fare = month_mean_per_mile_fare.sort_values(by='begintrip_timestamp', ascending=True)
     month_mean_per_mile_fare['begintrip_timestamp'] = month_mean_per_mile_fare['begintrip_timestamp'].dt.strftime('%b %Y')
-    month_mean_per_mile_fare = month_mean_per_mile_fare.rename(columns={"begintrip_timestamp": "Month_Year"})
+    month_mean_per_mile_fare = month_mean_per_mile_fare.rename(columns={"begintrip_timestamp": "Miesiac/Rok"})
     
     # month_mean_per_minute_fare = dataset.groupby(dataset.begintrip_timestamp.dt.to_period('M'))['per_minute_fare'].mean().reset_index(name='Monthly Per Minute Mean')
     # month_mean_per_minute_fare = month_mean_per_minute_fare.sort_values(by='begintrip_timestamp', ascending=True)
@@ -91,8 +91,8 @@ def median_trip_costs(dataset_):
     
     fig = px.line(
         data_frame=month_mean_per_mile_fare,
-        x='Month_Year',
-        y="Monthly Per Mile Mean",
+        x='Miesiac/Rok',
+        y="zł/km",
         title="Mediana stawek za km na przestrzeni miesiecy"
         
     )
@@ -161,7 +161,7 @@ def average_daily_earnings_over_time(dataset_):
         y="Monthly Average",
         title="Średnie zarobki dzienne netto")
 
-    fig.update_traces(line_color="#fc03df")
+    fig.update_traces(line_color="#000000")
     fig.update_layout(height=600, 
                       font=dict(family='Arial', size=14, color='black'),
                       plot_bgcolor="#999999",
