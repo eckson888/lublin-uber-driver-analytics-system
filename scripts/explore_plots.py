@@ -12,9 +12,10 @@ from plotly_calplot import calplot
 
 
 def licence_plates_categories(dataset):    
-    # df_counts = dataset.groupby(['product_type_name', 'license_plate']).size().reset_index(name='count')
-    df_counts_sorted = dataset.sort_values(by='count', ascending=False)
-    fig = px.bar(df_counts_sorted, 
+    # dataset = dataset.sort_values(by='count', ascending=False)  
+    df_grouped = dataset.groupby(['license_plate', 'product_type_name'], as_index=False)['count'].sum()
+    df_grouped = df_grouped.sort_values(by='count', ascending=False)  
+    fig = px.bar(df_grouped, 
                 y='license_plate', 
                 x='count', 
                 color='product_type_name', 
