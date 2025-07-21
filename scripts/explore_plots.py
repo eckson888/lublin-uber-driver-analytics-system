@@ -134,7 +134,7 @@ def average_earnings_per_driver(dataset_):
         data_frame=monthly_avg,
         x='month',
         y="Monthly Average",
-        title="Average monthly earnings per driver")
+        title="Średnie zarobki miesięczne netto")
 
     fig.update_traces(line_color='#6f03fc')
     fig.update_layout(height=600, font=dict(family='Arial', size=14, color='black'),plot_bgcolor="#999999")
@@ -153,18 +153,23 @@ def average_daily_earnings_over_time(dataset_):
     driver_monthly_avg = daily_earnings.groupby(['month', 'driver_id'])['driver_upfront_fare'].mean().reset_index()
 
     monthly_avg = driver_monthly_avg.groupby('month')['driver_upfront_fare'].mean().reset_index(name='Monthly Average')
-    monthly_avg['month'] = monthly_avg['month'].astype(str)
+    monthly_avg['month'] = monthly_avg['month'].dt.to_timestamp()
 
     fig = px.line(
         data_frame=monthly_avg,
         x='month',
         y="Monthly Average",
-        title="Average monthly earnings per driver")
+        title="Średnie zarobki dzienne netto")
 
     fig.update_traces(line_color="#fc03df")
-    fig.update_layout(height=600, font=dict(family='Arial', size=14, color='black'),plot_bgcolor="#999999")
+    fig.update_layout(height=600, 
+                      font=dict(family='Arial', size=14, color='black'),
+                      plot_bgcolor="#999999",
+                      xaxis=dict(
+                                tickformat="%b\n%Y",  
+                                dtick="M1"            
+                                ))
     return fig
-
 
 def pickups_heatmap(dataset_):
     dataset = dataset_.copy()
@@ -186,7 +191,7 @@ def pickups_heatmap(dataset_):
 
     fig.update_layout(
         
-        height=700,
+        height=850,
         font=dict(family='Arial', size=14, color='black'),
     )
 
@@ -220,7 +225,7 @@ def dropoffs_scatter(dataset_):
     )
 
     fig.update_layout(
-        height=700,
+        height=850,
         font=dict(family='Arial', size=14, color='black'),
         legend_visible=False
     )
