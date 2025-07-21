@@ -31,3 +31,10 @@ def get_trip_prices(db):
         result = session.execute(statement).all()
         df = pd.DataFrame(result,columns=['begintrip_timestamp','driver_upfront_fare','driver_id'])
         return df
+    
+def get_locations(db):
+    with Session(db.engine) as session:
+        statement=select(CleanedData.begintrip_lat,CleanedData.begintrip_lng,CleanedData.dropoff_lat,CleanedData.dropoff_lng)
+        result = session.execute(statement).all()
+        df = pd.DataFrame(result,columns=['begintrip_lat','begintrip_lng','dropoff_lat','dropoff_lng'])
+        return df

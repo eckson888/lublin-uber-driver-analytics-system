@@ -38,10 +38,10 @@ def explore_plots():
     plot_average_daily = ep.average_daily_earnings_over_time(queries.get_trip_prices(db))
     plot_average_daily_html = pio.to_html(plot_average_daily, full_html=False, include_plotlyjs='cdn')
     
-    plot_pickups_gradient = ep.pickups_heatmap(dataset)
+    plot_pickups_gradient = ep.pickups_heatmap(queries.get_locations(db))
     plot_pickups_gradient_html = pio.to_html(plot_pickups_gradient, full_html=False, include_plotlyjs='cdn')
     
-    plot_dropoffs_scatter = ep.dropoffs_scatter(dataset)
+    plot_dropoffs_scatter = ep.dropoffs_scatter(queries.get_locations(db))
     plot_dropoffs_scatter_html = pio.to_html(plot_dropoffs_scatter, full_html=False, include_plotlyjs='cdn')
     
     return render_template("explore.html",
