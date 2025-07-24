@@ -187,7 +187,7 @@ def pickups_heatmap(dataset_):
         radius=130,
         custom_data="count",
         map_style='carto-darkmatter',
-        title="Pickup locations heatmap"
+        title="Mapa cieplna miejsc odbioru"
     )
 
     fig.update_layout(
@@ -222,7 +222,7 @@ def dropoffs_scatter(dataset_):
         zoom=10,
         hover_data="Dropoffs in this location",
         map_style='dark',
-        title="Dropoff Locations scatter heatmap"
+        title="Mapa cieplna miejsc docelowych"
     )
 
     fig.update_layout(

@@ -34,10 +34,12 @@ def clean_data(datasets_combined):
     datasets_combined['actual_wait_time'] = (pd.to_datetime(datasets_combined['begintrip_timestamp_local'],format='mixed') - 
                                              pd.to_datetime(datasets_combined['request_timestamp_local'],format='mixed')).dt.total_seconds()
     datasets_combined['wait_time_delta'] = datasets_combined['actual_wait_time'] - datasets_combined['driver_pickup_eta']   
+    
+    
 
 
 
-    # data cleaning/dimension reduction
+    #. data cleaning/dimension reduction
     
     datasets_combined.drop("request_timestamp_local",axis='columns', inplace=True)
     datasets_combined.drop("begintrip_timestamp_local",axis='columns', inplace=True)
