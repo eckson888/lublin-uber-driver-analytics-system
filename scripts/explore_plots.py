@@ -172,6 +172,8 @@ def average_daily_earnings_over_time(dataset_):
                                 ))
     return fig
 
+#TODO https://plotly.com/python/hexbin-mapbox
+
 def pickups_heatmap(dataset_):
     dataset = dataset_.copy()
     grouped = dataset.groupby(["begintrip_lat", "begintrip_lng"]).size().reset_index(name="count")
