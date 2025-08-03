@@ -33,7 +33,7 @@ def clean_data(datasets_combined):
     datasets_combined['trip_hour_of_day'] = pd.to_datetime(datasets_combined['begintrip_timestamp_local'], format='mixed').dt.hour    
     datasets_combined['actual_wait_time'] = (pd.to_datetime(datasets_combined['begintrip_timestamp_local'],format='mixed') - 
                                              pd.to_datetime(datasets_combined['request_timestamp_local'],format='mixed')).dt.total_seconds()
-    datasets_combined['wait_time_delta'] = datasets_combined['actual_wait_time'] - datasets_combined['driver_pickup_eta']   
+    datasets_combined['wait_time_delta'] = datasets_combined['actual_wait_time'] - datasets_combined['driver_pickup_eta'].astype(float)   
     
     
 
